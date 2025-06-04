@@ -1,4 +1,5 @@
 ﻿#include <iostream>
+#include <ctime>
 
 using namespace std;
 
@@ -6,6 +7,7 @@ class Animal
 {
 public:
 	virtual void makeSound() = 0;
+	virtual void move() = 0;
 	virtual ~Animal();
 };
 
@@ -19,6 +21,10 @@ class Dog : public Animal
 	{
 		cout << "멍멍" << endl;
 	}
+	void move() override
+	{
+		cout << "개가 달린다" << endl;
+	}
 };
 
 class Cat : public Animal
@@ -27,6 +33,10 @@ class Cat : public Animal
 	{
 		cout << "야옹야옹" << endl;
 	}
+	void move() override
+	{
+		cout << "고양이가 달린다" << endl;
+	}
 };
 
 class Cow : public Animal
@@ -34,6 +44,10 @@ class Cow : public Animal
 	void makeSound() override
 	{
 		cout << "음메" << endl;
+	}
+	void move() override
+	{
+		cout << "소가 달린다" << endl;
 	}
 };
 
@@ -71,6 +85,7 @@ public:
 		for (int i = 0; i < animalsLength; i++)
 		{
 			animals[i]->makeSound();
+			animals[i]->move();
 		}
 	}
 
@@ -83,6 +98,22 @@ public:
 		}
 	}
 };
+
+Animal* createRandomAnimal()
+{
+	int random = rand() % 3;
+	switch (random)
+	{
+	case 0:
+		return new Dog;
+	case 1:
+		return new Cat;
+	case 2:
+		return new Cow;
+	default:
+		return nullptr;
+	}
+}
 
 int main()
 {
@@ -103,21 +134,23 @@ int main()
 	////////////////////////////////////////////////////////////
 
 	Zoo zoo{};
-	zoo.addAnimal(new Dog);
-	zoo.addAnimal(new Cat);
-	zoo.addAnimal(new Cow);
-	zoo.addAnimal(new Dog);
-	zoo.addAnimal(new Cat);
-	zoo.addAnimal(new Cow);
-	zoo.addAnimal(new Cat);
-	zoo.addAnimal(new Cow);
-	zoo.addAnimal(new Cat);
-	zoo.addAnimal(new Cow);
+	srand(static_cast<unsigned int>(time(nullptr)));
 
-	zoo.addAnimal(new Cat);
-	zoo.addAnimal(new Dog);
-	zoo.addAnimal(new Cow);
-	zoo.addAnimal(new Dog);
+	zoo.addAnimal(createRandomAnimal());
+	zoo.addAnimal(createRandomAnimal());
+	zoo.addAnimal(createRandomAnimal());
+	zoo.addAnimal(createRandomAnimal());
+	zoo.addAnimal(createRandomAnimal());
+	zoo.addAnimal(createRandomAnimal());
+	zoo.addAnimal(createRandomAnimal());
+	zoo.addAnimal(createRandomAnimal());
+	zoo.addAnimal(createRandomAnimal());
+	zoo.addAnimal(createRandomAnimal());
+
+	zoo.addAnimal(createRandomAnimal());
+	zoo.addAnimal(createRandomAnimal());
+	zoo.addAnimal(createRandomAnimal());
+	zoo.addAnimal(createRandomAnimal());
 
 	zoo.performActions();
 
